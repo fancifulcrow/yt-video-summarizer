@@ -1,19 +1,17 @@
-# import streamlit as st
-from openai import OpenAI
+from pytube import YouTube
+import speech_recognition as sr
+from pydub import AudioSegment
 
-from dotenv import load_dotenv
-from os import getenv
+url = input("Enter the YouTube video URL: ")
 
-load_dotenv()
+yt = YouTube(url)
 
-client = OpenAI(api_key=getenv("OPENAI_KEY"))
+audio_stream = yt.streams.filter(only_audio=True).first()
+audio_stream.download(output_path='.', filename='sound.mp4')
 
-completion = client.chat.completions.create(
-  model="gpt-3.5-turbo",
-  messages=[
-    {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
-    {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
-  ]
-)
+# Convert the audio to WAV format using pydub
+audio = AudioSegment.from_file("sound.mp4")
+audio.export("sound.wav", format="wav")
 
-print(completion.choices[0].message)
+r = sr.Recognizer()
+audio = sr.AudioFile("sound.wav")
