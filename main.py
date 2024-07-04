@@ -8,26 +8,21 @@ import shutil
 
 TEMP_FOLDER = "temp"
 
-# url = input("Enter the YouTube video URL: ")
-URL = "https://www.youtube.com/watch?v=rrB13utjYV4"
-
 
 def get_youtube_audio(url):
-    try:
-        yt = YouTube(url)
-        audio_stream = yt.streams.filter(only_audio=True).first()
-        filename = 'sound.mp4'
-        audio_stream.download(output_path=f"{TEMP_FOLDER}", filename=filename)
-        audio = AudioSegment.from_file(f"{TEMP_FOLDER}/{filename}")
+    yt = YouTube(url)
+    audio_stream = yt.streams.filter(only_audio=True).first()
+    filename = 'sound.mp4'
+    audio_stream.download(output_path=TEMP_FOLDER, filename=filename)
+    audio = AudioSegment.from_file(f"{TEMP_FOLDER}/{filename}")
 
-        return audio
-    
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
+    print("Download Complete.")
+
+    return audio
 
 
 def transcribe_audio(audio):
+    print("Transcribing Audio...")
     r = sr.Recognizer()
 
     # Break the audio into chunks of 1 minute each (60000 ms)
@@ -37,6 +32,7 @@ def transcribe_audio(audio):
     transcript = ""
 
     for i, chunk in enumerate(chunks):
+        print(f"Chunk: {i + 1}/{len(chunks)}")
         chunk_filename = f"{TEMP_FOLDER}/chunk{i}.wav"
         chunk.export(chunk_filename, format="wav")
         with sr.AudioFile(chunk_filename) as source:
@@ -47,6 +43,8 @@ def transcribe_audio(audio):
                 print(f"Could not request results from Google Speech Recognition service; {e}")
             except sr.UnknownValueError:
                 print("Google Speech Recognition could not understand audio")
+
+    print("Transcription complete.")
         
     return transcript
 
@@ -92,6 +90,11 @@ def summarize(transcript, model):
 #     return response.json()["response"]
 
 
+def save(summary):
+    with open("summary.txt", mode="w", encoding="utf-8") as file:
+        file.write(summary)
+
+
 def clear_temp():
     if os.path.exists(TEMP_FOLDER):
         shutil.rmtree(TEMP_FOLDER)
@@ -103,13 +106,17 @@ def clear_temp():
 def main():
     clear_temp()
 
-    audio = get_youtube_audio(URL)
+    url = input("Paste the Youtube Video link\n")
+    audio = get_youtube_audio(url)
     transcript = transcribe_audio(audio)
+    print("Now Summarizing")
     summary = summarize(transcript=transcript, model="phi3")
     
     clear_temp()
-    
-    print(summary)
+
+    save(summary)
+
+    print("Summary Complete.")
 
 
 if __name__ == "__main__":
