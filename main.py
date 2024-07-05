@@ -10,6 +10,7 @@ TEMP_FOLDER = "temp"
 
 
 def get_youtube_audio(url):
+    print("Downloading Youtube Audio...")
     yt = YouTube(url)
     audio_stream = yt.streams.filter(only_audio=True).first()
     filename = 'sound.mp4'
@@ -109,8 +110,8 @@ def main():
     url = input("Paste the Youtube Video link\n")
     audio = get_youtube_audio(url)
     transcript = transcribe_audio(audio)
-    print("Now Summarizing")
-    summary = summarize(transcript=transcript, model="phi3")
+    print("Now Summarizing...")
+    summary = summarize(transcript=transcript, model="mistral:7b")
     
     clear_temp()
 
