@@ -1,7 +1,7 @@
 # YouTube Video Summarizer
 
 ## Overview
-This script allows you to download audio from a YouTube video, transcribe it, and summarize the transcription. It is a practical demonstration of how to run Large Language Models (LLMs) locally on your computer.
+This script allows you to download audio from a YouTube video, transcribe it, and summarize the transcription. It is a practical demonstration of how to use Large Language Models (LLMs) locally on your computer.
 
 ## Requirements
 Ensure you have the following installed on your computer:
@@ -20,7 +20,7 @@ pip install -r requirements.txt
 Alternatively, you can install each package individually:
 
 ```
-pip install pytube SpeechRecognition pydub ollama
+pip install pytubefix SpeechRecognition pydub ollama
 ```
 
 You can customize the LLM used for summarization by changing the model parameter in the `summarize` function.
@@ -43,20 +43,31 @@ python main.py
 4. **Save Summary:** The summary is saved to a file named summary.txt.
 
 ## Example
-Here is an example of a summarization using Mistral 7b:
+Here is an example of a summarization using Llama 3.1 8B:
 
 **Youtube Video:**
-[Fireship's Linux in 100 seconds](https://www.youtube.com/watch?v=rrB13utjYV4)
+[Master the Perfect ChatGPT Prompt Formula (in just 8 minutes)!](https://www.youtube.com/watch?v=jC4v5AS4RIM)
 
 **Summary:**
 ```
-The video discusses Linux, an open-source operating system created by Linus Torvalds in 1991. Its purpose was to provide a free version of the Minix operating system, which itself was based on Unix. Today, it's widely used in web servers, embedded applications such as Smart TVs and Android mobile devices, and is considered an excellent choice for personal computers. Linux comes with various distributions (distros) like Debian, Arch, and Fedora.
+Here is a concise summary of the text (within 400 words):
 
-The core of a Linux system includes the bootloader, kernel, and multiple subsystems like process schedulers, device drivers, and memory managers that communicate via a system call interface and C standard library. Beyond the kernel are user applications provided primarily through the Canoe project, including command-line shells, windowing systems, developer utilities, and countless other applications.
+The speaker, who has spent hundreds of hours learning prompt engineering, shares the six building blocks that make up a good prompt to consistently generate high-quality outputs from AI models. The six components are: Task, Context, Exemplars, Persona, Format, and Tone.
 
-To get started with Linux, install your preferred distro, open the terminal, navigate directories using commands like `cd` and `ls`, create files using `touch`, edit them with tools like nano or emacs, view their contents with `cat`, find specific lines with `grep`, check file sizes with `du`, change owners and permissions with `chown` and `chmod`, elevate privileges with the `sudo` prefix, and install new software using package managers like APT.
+The speaker emphasizes the importance of knowing not only what these components are but also their order of priority. They use a simple example, "I'm a 70 kg male; give me a 3-month training program," to illustrate how including relevant context is crucial for meaningful output. The speaker suggests that if you just input the task without context, there will still be some output, but with context, the output will be more relevant.
 
-The video concludes by summarizing these commands and encouraging viewers to subscribe for more content. The key takeaways are the versatility of Linux as an operating system and its extensive command-line interface, which allows users to interact with the kernel, manage files, install software, and perform various other tasks.
+The speaker breaks down each component:
+
+* Task: Start with an action verb and clearly articulate the end goal.
+* Context: Include relevant background information to constrain endless possibilities. Ask yourself what's the user's background, what does success look like, and what environment are they in?
+* Exemplars: Use examples within the prompt to improve output quality. This can be a simple example or a framework.
+* Persona: Identify who you want the AI model to be and use that persona in your prompt.
+* Format: Use relevant formats such as paragraphs, bullet points, or code blocks.
+* Tone: Use a casual or formal tone of voice, depending on the context.
+
+The speaker uses examples to illustrate each component and emphasizes the importance of including just enough information to get a good result. They also suggest that not all components are necessary for every prompt, but including relevant information will improve output quality.
+
+Overall, the speaker provides a comprehensive overview of the six building blocks of a good prompt and how to use them effectively to generate high-quality outputs from AI models.
 ```
 
 ## License

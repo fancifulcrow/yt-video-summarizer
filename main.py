@@ -1,4 +1,4 @@
-from pytube import YouTube
+from pytubefix import YouTube
 import speech_recognition as sr
 from pydub import AudioSegment
 from pydub.utils import make_chunks
@@ -54,7 +54,7 @@ def summarize(transcript, model):
     response = ollama.chat(model=model, messages=[
         {
             'role': 'system',
-            'content': 'Your goal is to summarize the text given to you in not more than 400 words. It is a transcript of a youtube video. Ensure that you get all the major points focused on in the video.'
+            'content': 'You are a skilled content summarizer. Your task is to provide a concise summary of a text that is a transcript from a YouTube video. The summary should not exceed 400 words and must cover all major points discussed in the video. Ensure the summary is clear, professional, and provides a comprehensive overview of the content.'
         },
         {
             'role': 'user',
@@ -111,7 +111,7 @@ def main():
     audio = get_youtube_audio(url)
     transcript = transcribe_audio(audio)
     print("Now Summarizing...")
-    summary = summarize(transcript=transcript, model="mistral:7b")
+    summary = summarize(transcript=transcript, model="llama3.1:8b")
     
     clear_temp()
 
